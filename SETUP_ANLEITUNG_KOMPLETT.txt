@@ -1,0 +1,149 @@
+GOLF-SYSTEM - KOMPLETTE SETUP-ANLEITUNG
+========================================
+
+NEUE FEATURES:
+==============
+
+✓ HUD zeigt RICHTUNG zum Loch (automatisch berechnet!)
+✓ HUD zeigt Ball-Position (X,Y Koordinaten)
+✓ HUD zeigt Distanz zum Loch
+✓ Höhere Dämpfung (Ball rollt weniger weit)
+✓ Power kalibriert: 100% = exakte Schlagweite
+
+HUD-ANZEIGE:
+============
+
+=== HOLE 1 ===
+→ LOCH: NE 45°      ← Richtung zum Loch!
+DIST: 120m          ← Distanz zum Loch
+
+BALL: 156,234       ← Ball-Position (X,Y)
+
+CLUB: Driver
+POWER: 100%
+STROKES: 2
+
+INSTALLATION:
+=============
+
+1. BALL
+-------
+Script: golfball_PHYSICS.lsl
+Name: "Golfball"
+Größe: 0.1m Kugel
+Physics: Aktiviert
+Features:
+- Prallt von Objekten ab!
+- Zielhilfe-Pfeil mit Dialog
+- Bodenstrukturen (Sand, Wasser, Rough)
+
+2. HUD
+------
+Script: golf_hud_NAVIGATION.lsl
+Layout:
+  [Driver]  [Wood]
+  [Wedge]   [Putter]
+  [Power]   [HIT]
+  [Reset]
+
+Button-Namen (exakt!):
+- Driver
+- Wood
+- Wedge
+- Putter
+- Power
+- HitButton
+- ResetButton
+
+3. LÖCHER
+---------
+Script: golf_hole_POSITIONS.lsl
+Pro Loch:
+- Im Script ändern: gHoleNumber = 1 (dann 2, 3, 4...)
+- Loch platzieren
+- Sendet automatisch Position ans HUD!
+
+4. REZZER (optional)
+--------------------
+Script: ball_rezzer_single_hole_FIXED.lsl
+Pro Loch:
+- HOLE_NUMBER = 1 (dann 2, 3, 4...)
+- Am Tee platzieren
+
+WORKFLOW:
+=========
+
+1. Ball rezzen (oder Rezzer touchen)
+
+2. HUD zeigt:
+   → LOCH: NE 45°
+   DIST: 120m
+   
+3. Touch Ball -> Zielhilfe-Dialog
+   - Drehe Pfeil auf NE (45°)
+   - "Fertig"
+
+4. HUD: Wähle Schläger + Power
+   - Touch "Driver"
+   - Touch "Power" bis 100%
+
+5. Touch "HIT" im HUD
+   - Ball fliegt!
+
+6. HUD aktualisiert automatisch:
+   → LOCH: E 90°
+   DIST: 80m
+
+7. Zum Ball gehen, wiederholen!
+
+POWER-KALIBRIERUNG:
+===================
+
+Bei 100% Power fliegt der Ball die angegebene Distanz:
+
+Driver @ 100%  = 40m
+Driver @ 75%   = 30m
+Driver @ 50%   = 20m
+Driver @ 25%   = 10m
+
+Wood @ 100%    = 25m
+Wedge @ 100%   = 10m
+Putter @ 100%  = 3m
+
+RICHTUNGS-SYSTEM:
+=================
+
+HUD zeigt Richtung zum Loch:
+- N    = 0° (Norden)
+- NE   = 45° (Nordost)
+- E    = 90° (Osten)
+- SE   = 135° (Südost)
+- S    = 180° (Süden)
+- SW   = 225° (Südwest)
+- W    = 270° (Westen)
+- NW   = 315° (Nordwest)
+
+Ball-Pfeil im Dialog entsprechend einstellen!
+
+LOCH-POSITIONEN:
+================
+
+Wenn Sie mir die Positionen geben, kann ich
+ein Setup-Script erstellen das alle Löcher
+automatisch konfiguriert!
+
+Format:
+Loch 1: <X, Y, Z>
+Loch 2: <X, Y, Z>
+etc.
+
+TIPPS:
+======
+
+- HUD-Richtung beachten: → LOCH: NE 45°
+- Ball-Pfeil auf 45° drehen
+- Bei Wind/Hindernissen anpassen
+- Volle Power für max. Distanz
+- Halbe Power für Kontrolle
+
+FERTIG! 🏌️⛳

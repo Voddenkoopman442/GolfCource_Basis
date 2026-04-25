@@ -1,0 +1,165 @@
+GOLF-SYSTEM EINSTELLUNGEN - Selbst anpassen
+=============================================
+
+ALLE WICHTIGEN EINSTELLUNGEN ZUM TUNEN:
+
+═══════════════════════════════════════════════════════════
+1. SCHLAGKRAFT (Ball-Script: golfball_PHYSICS.lsl)
+═══════════════════════════════════════════════════════════
+
+Zeile ~302:
+    vector impulse = direction * (power * 0.1);
+                                          ^^^^
+                                          HIER!
+
+POWER-MULTIPLIKATOR ändern:
+- 0.1 = Aktuell
+- 0.05 = Halbe Kraft (Ball fliegt kürzer)
+- 0.2 = Doppelte Kraft (Ball fliegt weiter)
+
+Formel: Impulse = Schläger-Power × Power-Level × MULTIPLIKATOR
+Beispiel Driver @ 100%: 40 × 1.0 × 0.1 = 4.0 Impulse
+
+
+═══════════════════════════════════════════════════════════
+2. DÄMPFUNG / BREMSKRAFT (Ball-Script: golfball_PHYSICS.lsl)
+═══════════════════════════════════════════════════════════
+
+Zeile ~371:
+    vector brakeForce = vel * -0.4;
+                               ^^^^
+                               HIER!
+
+BREMSKRAFT ändern:
+- -0.4 = Aktuell (stark gebremst)
+- -0.2 = Weniger Bremsung (Ball rollt weiter)
+- -0.6 = Mehr Bremsung (Ball stoppt schneller)
+
+Je höher der Wert (negativer), desto schneller stoppt der Ball!
+
+
+═══════════════════════════════════════════════════════════
+3. BALL-MASSE (Ball-Script: golfball_PHYSICS.lsl)
+═══════════════════════════════════════════════════════════
+
+Zeile ~192:
+    PRIM_MATERIAL, PRIM_MATERIAL_STONE,
+                   ^^^^^^^^^^^^^^^^^^^
+                   HIER!
+
+MATERIAL-OPTIONEN (von leicht zu schwer):
+- PRIM_MATERIAL_PLASTIC  = Leicht (fliegt weit)
+- PRIM_MATERIAL_WOOD     = Mittel
+- PRIM_MATERIAL_STONE    = Schwer (aktuell)
+- PRIM_MATERIAL_METAL    = Sehr schwer (fliegt kurz)
+
+Schwerer Ball = braucht mehr Kraft = fliegt kürzer!
+
+
+═══════════════════════════════════════════════════════════
+4. STOPP-SCHWELLE (Ball-Script: golfball_PHYSICS.lsl)
+═══════════════════════════════════════════════════════════
+
+Zeile ~377:
+    if (speed < 0.15)
+                ^^^^
+                HIER!
+
+STOPP-GESCHWINDIGKEIT ändern:
+- 0.15 = Aktuell
+- 0.1 = Ball rollt länger aus
+- 0.2 = Ball stoppt früher
+
+Ball gilt als "gestoppt" wenn Geschwindigkeit unter diesen Wert fällt.
+
+
+═══════════════════════════════════════════════════════════
+5. SCHLÄGER-DISTANZEN (HUD-Script: golf_hud_NAVIGATION.lsl)
+═══════════════════════════════════════════════════════════
+
+Zeile ~17-18:
+list gClubNames = ["Driver", "Wood", "Wedge", "Putter"];
+list gClubPowers = [40.0, 25.0, 10.0, 3.0];
+                    ^^^^  ^^^^  ^^^^  ^^^
+                    HIER ändern!
+
+BEISPIEL - Distanzen halbieren:
+list gClubPowers = [20.0, 12.5, 5.0, 1.5];
+
+BEISPIEL - Distanzen verdoppeln:
+list gClubPowers = [80.0, 50.0, 20.0, 6.0];
+
+
+═══════════════════════════════════════════════════════════
+6. POWER-STUFEN (HUD-Script: golf_hud_NAVIGATION.lsl)
+═══════════════════════════════════════════════════════════
+
+Zeile ~24:
+list gPowerLevels = ["25%", "50%", "75%", "100%"];
+
+Mehr Stufen hinzufügen:
+list gPowerLevels = ["10%", "25%", "50%", "75%", "100%"];
+
+ACHTUNG: Berechnung ist automatisch:
+- 25% = Index 0 → (0+1) × 0.25 = 0.25
+- 50% = Index 1 → (1+1) × 0.25 = 0.50
+- etc.
+
+
+═══════════════════════════════════════════════════════════
+SCHNELL-TUNING GUIDE
+═══════════════════════════════════════════════════════════
+
+PROBLEM: Ball fliegt zu weit
+LÖSUNG 1: Power-Multiplikator runter (0.1 → 0.05)
+LÖSUNG 2: Bremskraft hoch (-0.4 → -0.6)
+LÖSUNG 3: Material schwerer (STONE → METAL)
+
+PROBLEM: Ball fliegt zu kurz
+LÖSUNG 1: Power-Multiplikator hoch (0.1 → 0.2)
+LÖSUNG 2: Bremskraft runter (-0.4 → -0.2)
+LÖSUNG 3: Material leichter (STONE → PLASTIC)
+
+PROBLEM: Ball rollt zu lange
+LÖSUNG 1: Bremskraft hoch (-0.4 → -0.8)
+LÖSUNG 2: Stopp-Schwelle hoch (0.15 → 0.25)
+
+PROBLEM: Ball stoppt zu schnell
+LÖSUNG 1: Bremskraft runter (-0.4 → -0.1)
+LÖSUNG 2: Stopp-Schwelle runter (0.15 → 0.05)
+
+
+═══════════════════════════════════════════════════════════
+EMPFOHLENE WERTE FÜR VERSCHIEDENE SPIELWEISEN
+═══════════════════════════════════════════════════════════
+
+REALISTISCH (wie echtes Golf):
+- Power-Multiplikator: 0.15
+- Bremskraft: -0.3
+- Material: STONE
+- Schläger: [40.0, 25.0, 10.0, 3.0]
+
+ARCADE (Fun-Modus):
+- Power-Multiplikator: 0.5
+- Bremskraft: -0.2
+- Material: PLASTIC
+- Schläger: [80.0, 50.0, 20.0, 6.0]
+
+MINI-GOLF (kurze Distanzen):
+- Power-Multiplikator: 0.05
+- Bremskraft: -0.5
+- Material: METAL
+- Schläger: [10.0, 6.0, 3.0, 1.0]
+
+
+═══════════════════════════════════════════════════════════
+NACH ÄNDERUNGEN
+═══════════════════════════════════════════════════════════
+
+1. Script speichern
+2. Objekt resetten (oder neu rezzen)
+3. Testen mit DEBUG-Ausgabe:
+   "DEBUG: Raw Power=40.0 | Impulse Stärke=4.0"
+4. Anpassen und wiederholen!
+
+Viel Erfolg beim Tunen! 🏌️⛳
